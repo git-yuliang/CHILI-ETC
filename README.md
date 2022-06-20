@@ -1,6 +1,6 @@
 # CHILI-ETC
-CHILI-ETC
-This code is used for setting the chili-etc parameters.
+CHILI-Exposure Time Calculator, ETC
+This code is used for setting the CHILI exposure time parameters.
 by YuLiang 
 yuliang@shao.ac.cn
 
