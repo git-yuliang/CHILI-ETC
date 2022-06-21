@@ -1,0 +1,12 @@
+README.md
+setup.py
+src/CHILI_ETC.egg-info/PKG-INFO
+src/CHILI_ETC.egg-info/SOURCES.txt
+src/CHILI_ETC.egg-info/dependency_links.txt
+src/CHILI_ETC.egg-info/requires.txt
+src/CHILI_ETC.egg-info/top_level.txt
+src/chili_etc.egg-info/PKG-INFO
+src/chili_etc.egg-info/SOURCES.txt
+src/chili_etc.egg-info/dependency_links.txt
+src/chili_etc.egg-info/requires.txt
+src/chili_etc.egg-info/top_level.txt
