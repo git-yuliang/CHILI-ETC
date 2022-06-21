@@ -5,8 +5,8 @@ Created on Fri Jun 17 09:34:57 2022
 @author: DELL
 """
 
-from ifs_etc.etc1d.config import build_default_calc
-from ifs_etc.etc1d.perform_calculation import perform_calculation
+from chili_etc.chili_config import build_default_calc
+from chili_etc.chili_perform_calculation import perform_calculation
 
 config = build_default_calc()
 config['obst'] = 300

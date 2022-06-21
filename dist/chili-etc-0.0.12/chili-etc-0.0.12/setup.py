@@ -28,12 +28,6 @@ setup(
                       'scipy>=1.1.0',
                       'extinction>=0.4.0'],
     package_dir={"": "src"},
-# =============================================================================
-#     # 安装过程中，需要安装的静态文件，如配置文件、service文件、图片等
-#     data_files=[
-#         ('src/referdata'),
-#                ],
-# =============================================================================
     include_package_data=True,
     # exclude_package_data={"": ["README.md"]},
     python_requires='>=3.7',
