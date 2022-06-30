@@ -2,7 +2,12 @@
 """
 Created on Tue Jun 21 10:33:40 2022
 
-@author: DELL
+@author: Liang Yu
+This work is modified on the basis of previous work(by Lin Lin@SHAO: https://ifs-etc.readthedocs.io/en/latest/quickstart.html) 
+
+This code is used for setting the chili-etc parameters.
+by YuLiang 
+yuliang@shao.ac.cn
 """
 import pandas as pd
 import numpy as np
@@ -428,12 +433,12 @@ class calculation_limitmag(object):
 
         source_rate = (-coeff_s1 + np.sqrt(coeff_s1 ** 2 - 4 * coeff_s2 * coeff_s0)) / (2 * coeff_s2)
 
-        throughtputwave, throughtputvalue = get_throughput(chili_config)
+        throughtputwave, throughtputvalue = get_throughput()
         flux = electron2flux(chili_config, ccdspec_wave, source_rate,
                              throughtputwave, throughtputvalue,
                              fluxunit='erg/s/cm^2/A')
 
-        filter = read_filter(config['source']['normalization']['band'])
+        filter = read_filter(chili_config['source']['normalization']['band'])
         ind_filter = (ccdspec_wave >= filter.wavemin) & (ccdspec_wave <= filter.wavemax)
         filter_wave = ccdspec_wave[ind_filter]
         filter_flux = np.interp(filter_wave, filter.wave, filter.throughput)
@@ -472,7 +477,7 @@ class calculation_exptime(object):
 
             obst_arr = (-coeff_t1 + np.sqrt(coeff_t1 ** 2 - 4 * coeff_t2 * coeff_t0)) / (2 * coeff_t2)
 
-            filter = read_filter(config['source']['normalization']['band'])
+            filter = read_filter(chili_config['source']['normalization']['band'])
             ind_filter = (ccdspec_wave >= filter.wavemin) & (ccdspec_wave <= filter.wavemax)
             tmp_obst = np.median(obst_arr[ind_filter])
             repn = tmp_obst * repn / obst

@@ -7,7 +7,7 @@ import extinction
 import pdb
 
 path = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
-refdata = os.path.join(path, 'refdata/')
+refdata = os.path.join(path, r'refdata/')
 
 
 
@@ -97,9 +97,9 @@ class read_template(object):
         self.flux = template_flux
 
 
-def get_wavearr(config):
+def get_wavearr(chili_config):
 
-    instr_par = config['configuration']
+    instr_par = chili_config['configuration']
     wave_start = instr_par['wave_start']
     wave_end = instr_par['wave_end']
     wave_delta = instr_par['ccd_xsize'] * instr_par['readout_xbin']
@@ -181,9 +181,9 @@ def filter_mag(objwave, objflux, filterwave, filterthroughtput, output='mag'):
 
 
 
-def normalized(template_wave, template_flux, config):
+def normalized(template_wave, template_flux, chili_config):
 
-    source = config['source']
+    source = chili_config['source']
 
     normalize = source['normalization']
 
@@ -217,15 +217,15 @@ def normalized(template_wave, template_flux, config):
 
 class ModelCube(object):
 
-    def __init__(self, config):
+    def __init__(self, chili_config):
 
-        self.ccdspec_wave = get_wavearr(config)
+        self.ccdspec_wave = get_wavearr(chili_config)
         self.ccdspec_nw = len(self.ccdspec_wave)
 
 
         # grid = get_grid(config)
 
-        object = config['source']['spectrum']
+        object = chili_config['source']['spectrum']
 
         template = read_template(object)
         template_wave_interp = self.ccdspec_wave
@@ -233,5 +233,4 @@ class ModelCube(object):
 
         # self.ccdspec_flux = np.zeros(shape=(self.ccdspec_nw, grid.ny, grid.nx), dtype=np.float32)
 
-        self.wavecube, self.fluxcube, self.mag2d = normalized(template_wave_interp, template_flux_interp, config)
-
+        self.wavecube, self.fluxcube, self.mag2d = normalized(template_wave_interp, template_flux_interp, chili_config)

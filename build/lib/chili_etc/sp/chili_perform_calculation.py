@@ -16,7 +16,7 @@ from .chili_config import get_throughput
 import pdb
 
 path = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
-refdata = os.path.join(path, 'refdata/')
+refdata = os.path.join(path, r'refdata/')
 
 
 def flux2electron(spaxel_xsize, spaxel_ysize, wavearr, fluxarr, throughtputwave, throughtputvalue, fluxunit=''):
@@ -71,14 +71,14 @@ def flux2electron(spaxel_xsize, spaxel_ysize, wavearr, fluxarr, throughtputwave,
         return np.nan
 
 
-def electron2flux(config, wavearr, countsarr, throughtputwave, throughtputvalue, fluxunit=''):
+def electron2flux(chili_config, wavearr, countsarr, throughtputwave, throughtputvalue, fluxunit=''):
     '''
     :param wavearr: A
     :param countsarr: e-/s
     :return:
     '''
 
-    instru = config['configuration']
+    instru = chili_config['configuration']
 
     cc = 3.0e18   # speed of light, A/s
     spaxel_area = instru['spaxel_xsize'] * instru['spaxel_ysize']    # arcsec^2
@@ -180,6 +180,10 @@ def get_background(zodia_level, earthshine_level, wavearr, spaxel_xsize, spaxel_
     throughtputwave, throughtputvalue = get_throughput()
 
     # get the zodia spectrum, convert to e/s/spaxel/spec-elements
+    
+    #############
+    #############
+    
     filename = os.path.join(refdata, 'csst', 'background', 'zodi_spec.csv')
     cat = pd.read_csv(filename, comment='#')
     zodia_wave = cat['wave']
@@ -208,21 +212,21 @@ def get_background(zodia_level, earthshine_level, wavearr, spaxel_xsize, spaxel_
 
 
 
-class DetectorCountsRate(source.ModelCube):
+class DetectorCountsRate(chili_source.ModelCube):
 
-    def __init__(self, config):
+    def __init__(self, chili_config):
 
-        self.config = config
+        self.chili_config = chili_config
 
         # pdb.set_trace()
 
-        source.ModelCube.__init__(
-            self, config
+        chili_source.ModelCube.__init__(
+            self, chili_config
         )
 
         throughtputwave, throughtputvalue = get_throughput()
 
-        instru = config['configuration']
+        instru = chili_config['configuration']
         self.source_counts = flux2electron(instru['spaxel_xsize'], instru['spaxel_ysize'],
                                            self.wavecube, self.fluxcube,
                                            throughtputwave, throughtputvalue,
@@ -233,16 +237,16 @@ class DetectorCountsRate(source.ModelCube):
 
 class DetectorCounts(object):
 
-    def __init__(self, config, signal):
+    def __init__(self, chili_config, signal):
 
-        instru = config['configuration']
+        instru = chili_config['configuration']
 
         darkcube = np.zeros(shape=signal.source_counts.shape, dtype=float) + instru['dark']      # e/s/pix
         readnoisecube = np.zeros(shape=signal.source_counts.shape, dtype=float) + instru['readout_noise']   # e/pix
         nskycube = get_nsky(signal.ccdspec_wave)        # e/s/specsampling
 
-        repn = config['repn']
-        obst = config['obst']
+        repn = chili_config['repn']
+        obst = chili_config['obst']
         npixw = 2
         specsampling = 1
 
@@ -257,10 +261,10 @@ class DetectorCounts(object):
 
 class calculation_snr(object):
 
-    def __init__(self, config, straylight=False):
+    def __init__(self, chili_config, straylight=False):
 
-        signal_rate = DetectorCountsRate(config)
-        noise = DetectorCounts(config, signal_rate)
+        signal_rate = DetectorCountsRate(chili_config)
+        noise = DetectorCounts(chili_config, signal_rate)
 
         self.source = noise.sourcenn
         self.darknoise = np.sqrt(noise.darkn)
@@ -402,17 +406,17 @@ class read_report(object):
 
 class calculation_limitmag(object):
 
-    def __init__(self, config, straylight=False):
+    def __init__(self, chili_config, straylight=False):
 
-        instru = config['configuration']
-        targetsnr = config['targetsnr']
+        instru = chili_config['configuration']
+        targetsnr = chili_config['targetsnr']
 
         ccdspec_wave = np.arange(3500, 10000, 1.75555)
         darkc = instru['dark']      # e/s/pix
         rn = instru['readout_noise']   # e/pix
         nsky = get_nsky(ccdspec_wave)
-        repn = config['repn']
-        obst = config['obst']
+        repn = chili_config['repn']
+        obst = chili_config['obst']
         npixw = 2
         specsampling = 1
 
@@ -424,12 +428,12 @@ class calculation_limitmag(object):
 
         source_rate = (-coeff_s1 + np.sqrt(coeff_s1 ** 2 - 4 * coeff_s2 * coeff_s0)) / (2 * coeff_s2)
 
-        throughtputwave, throughtputvalue = get_throughput(config)
-        flux = electron2flux(config, ccdspec_wave, source_rate,
+        throughtputwave, throughtputvalue = get_throughput()
+        flux = electron2flux(chili_config, ccdspec_wave, source_rate,
                              throughtputwave, throughtputvalue,
                              fluxunit='erg/s/cm^2/A')
 
-        filter = read_filter(config['source']['normalization']['band'])
+        filter = read_filter(chili_config['source']['normalization']['band'])
         ind_filter = (ccdspec_wave >= filter.wavemin) & (ccdspec_wave <= filter.wavemax)
         filter_wave = ccdspec_wave[ind_filter]
         filter_flux = np.interp(filter_wave, filter.wave, filter.throughput)
@@ -439,20 +443,20 @@ class calculation_limitmag(object):
 
 class calculation_exptime(object):
 
-    def __init__(self, config, straylight=False):
+    def __init__(self, chili_config, straylight=False):
 
-        instru = config['configuration']
-        snr = config['targetsnr']
+        instru = chili_config['configuration']
+        snr = chili_config['targetsnr']
 
         ccdspec_wave = np.arange(3500, 10000, 1.75555)
         darkc = instru['dark']      # e/s/pix
         rn = instru['readout_noise']   # e/pix
-        obst = config['obst']
+        obst = chili_config['obst']
         nsky = get_nsky(ccdspec_wave)
         npixw = 2
         specsampling = 1
 
-        signal_rate = DetectorCountsRate(config)
+        signal_rate = DetectorCountsRate(chili_config)
         isource = signal_rate.source_counts
 
         # need to do loop, to limit the continous time per orbit and solve the repeat number.
@@ -468,7 +472,7 @@ class calculation_exptime(object):
 
             obst_arr = (-coeff_t1 + np.sqrt(coeff_t1 ** 2 - 4 * coeff_t2 * coeff_t0)) / (2 * coeff_t2)
 
-            filter = read_filter(config['source']['normalization']['band'])
+            filter = read_filter(chili_config['source']['normalization']['band'])
             ind_filter = (ccdspec_wave >= filter.wavemin) & (ccdspec_wave <= filter.wavemax)
             tmp_obst = np.median(obst_arr[ind_filter])
             repn = tmp_obst * repn / obst
@@ -477,19 +481,19 @@ class calculation_exptime(object):
 
 
 
-def perform_calculation(config, calculation_mode='exptime2snr'):
+def perform_calculation(chili_config, calculation_mode='exptime2snr'):
 
     if calculation_mode == 'exptime2snr':
 
-        report = calculation_snr(config)
+        report = calculation_snr(chili_config)
 
     elif calculation_mode == 'snr2exptime':
 
-        report = calculation_exptime(config)
+        report = calculation_exptime(chili_config)
 
     elif calculation_mode == 'snr2limitmag':
 
-        report = calculation_limitmag(config)
+        report = calculation_limitmag(chili_config)
 
     else:
 

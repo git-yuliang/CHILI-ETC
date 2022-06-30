@@ -1,3 +1,3 @@
 
-__all__ = ['config', 'source', 'perform_calculation']
+__all__ = ['chili_config', 'chili_source', 'chili_perform_calculation']
 

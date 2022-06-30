@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jun 20 16:02:45 2022
+Created on Tue Jun 21 10:33:40 2022
 
-@author: DELL
+@author: Liang Yu
+This work is modified on the basis of previous work(by Lin Lin@SHAO: https://ifs-etc.readthedocs.io/en/latest/quickstart.html) 
+
+This code is used for setting the chili-etc parameters.
+by YuLiang 
+yuliang@shao.ac.cn
 """
 
 from setuptools import setup, find_packages
 
 setup(
     name="chili-etc",
-    version="0.0.12",
+    version="0.0.18",
     description='exposure time calculator of CHILI',
     long_description=('CHILI-ETC is used for setting the CHILI exposure time parameters. by YuLiang yuliang@shao.ac.cn .\
                       This work is based on the work of the predecessors(by Lin Lin@SHAO: https://ifs-etc.readthedocs.io/en/latest/quickstart.html), \
@@ -27,15 +32,24 @@ setup(
                       'astropy>=4.2.1',
                       'scipy>=1.1.0',
                       'extinction>=0.4.0'],
-    package_dir={"": "src"},
-# =============================================================================
-#     # 安装过程中，需要安装的静态文件，如配置文件、service文件、图片等
-#     data_files=[
-#         ('src/referdata'),
-#                ],
-# =============================================================================
-    include_package_data=True,
-    # exclude_package_data={"": ["README.md"]},
+    #package_dir={'': 'src'},
+    #include_package_data=True,
+    package = {'chili_etc'},
+    package_dir={'chili_etc': 'src/chili_etc'},
+    package_data={'chili_etc': ['refdata/sed/*.fits',
+                                'refdata/source/*.json',
+                                'refdata/csst/background/*.csv',
+                                'refdata/csst/background/*.dat',
+                                'refdata/csst/ifs/*.dat',
+                                'refdata/csst/ifs/*.json',
+                                'refdata/csst/telescope/*.json',
+                                'refdata/chili/ifs/*.dat',
+                                'refdata/normalization/filters/*.par',
+                                'demo/*.ipynb',
+                                'demo/*.py',
+                                ]},
+    #include_package_data=True,
+
     python_requires='>=3.7',
 )
 

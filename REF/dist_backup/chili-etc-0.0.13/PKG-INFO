@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: chili-etc
+Version: 0.0.13
+Summary: exposure time calculator of CHILI
+Home-page: https://github.com/git-yuliang/CHILI-ETC/
+Author: Yu Liang
+Author-email: yuliang@shao.ac.cn
+License: MIT Licence
+Platform: UNKNOWN
+Requires-Python: >=3.7
+License-File: license
+
+CHILI-ETC is used for setting the CHILI exposure time parameters. by YuLiang yuliang@shao.ac.cn .                      This work is based on the work of the predecessors(by Lin Lin@SHAO: https://ifs-etc.readthedocs.io/en/latest/quickstart.html),                       and has been modified and completed on the basis of it.
+

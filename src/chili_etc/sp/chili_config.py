@@ -2,7 +2,7 @@
 """
 Created on Fri Jun 17 14:41:12 2022
 
-@author: DELL
+@author: Liang Yu
 This work is modified on the basis of previous work(by Lin Lin@SHAO: https://ifs-etc.readthedocs.io/en/latest/quickstart.html) 
 
 This code is used for setting the chili-etc parameters.

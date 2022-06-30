@@ -1,3 +1,15 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Jun 21 10:33:40 2022
+
+@author: Liang Yu
+This work is modified on the basis of previous work(by Lin Lin@SHAO: https://ifs-etc.readthedocs.io/en/latest/quickstart.html) 
+
+This code is used for setting the chili-etc parameters.
+by Yu Liang 
+yuliang@shao.ac.cn
+"""
+
 import numpy as np
 import pandas as pd
 import os
