@@ -2,7 +2,12 @@
 """
 Created on Tue Jun 21 10:33:40 2022
 
-@author: DELL
+@author: Liang Yu
+This work is modified on the basis of previous work(by Lin Lin@SHAO: https://ifs-etc.readthedocs.io/en/latest/quickstart.html) 
+
+This code is used for setting the chili-etc parameters.
+by YuLiang 
+yuliang@shao.ac.cn
 """
 import pandas as pd
 import numpy as np
@@ -403,15 +408,14 @@ class read_report(object):
         self.img2d = f['img2d'].value
         f.close()
 
-
 class calculation_limitmag(object):
 
     def __init__(self, chili_config, straylight=False):
 
         instru = chili_config['configuration']
         targetsnr = chili_config['targetsnr']
-
-        ccdspec_wave = np.arange(3500, 10000, 1.75555)
+        ccdspec_wave = chili_config['ccdspec_wave']
+        #ccdspec_wave = np.arange(3500, 10000, 1.75555)
         darkc = instru['dark']      # e/s/pix
         rn = instru['readout_noise']   # e/pix
         nsky = get_nsky(ccdspec_wave)
@@ -440,7 +444,6 @@ class calculation_limitmag(object):
         self.limitmag = filter_mag(ccdspec_wave, flux, filter_wave, filter_flux, output='mag')
 
 
-
 class calculation_exptime(object):
 
     def __init__(self, chili_config, straylight=False):
@@ -448,7 +451,7 @@ class calculation_exptime(object):
         instru = chili_config['configuration']
         snr = chili_config['targetsnr']
 
-        ccdspec_wave = np.arange(3500, 10000, 1.75555)
+        ccdspec_wave = chili_config['ccdspec_wave']
         darkc = instru['dark']      # e/s/pix
         rn = instru['readout_noise']   # e/pix
         obst = chili_config['obst']

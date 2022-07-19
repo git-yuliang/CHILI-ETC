@@ -14,7 +14,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="chili-etc",
-    version="0.0.19",
+    version="0.1.1",
     description='exposure time calculator of CHILI',
     long_description=('CHILI-ETC is used for setting the CHILI exposure time parameters. by YuLiang yuliang@shao.ac.cn .\
                       This work is based on the work of the predecessors(by Lin Lin@SHAO: https://ifs-etc.readthedocs.io/en/latest/quickstart.html), \

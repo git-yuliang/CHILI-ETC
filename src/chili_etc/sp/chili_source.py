@@ -70,17 +70,28 @@ class read_template(object):
             if template_filename in ['SFgal_texp_FeH0_tau5_Ew10_AGN1.fits',
                                      'SFgal_texp_FeH0_tau1_Ewd.fits',
                                      'SFgal_texp_FeH0_tau5_Ew5.fits',
-                                     'SFgal_texp_FeH-2_tau10_Ew50.fits']:
+                                     'SFgal_texp_FeH-2_tau10_Ew50.fits',
+                                     'crab_lamost.fits']:
                 template_filename = os.path.join(refdata, 'sed', template_filename)
 
             hdu = fits.open(template_filename)
             template_wave = hdu[1].data['wavelength']   # A
             template_flux = hdu[1].data['flux'] * 1e-12         # erg/s/A/cm2
-
+            
             # If the data is big endian, swap the byte order to make it little endian
             if template_wave.dtype.byteorder == '>':
                 template_wave = template_wave.byteswap().newbyteorder()
-
+                
+            ########################################################################################
+            # Crab Nebula  RA = 83.633210  Dec = 22.014460  r = 0.200000  [05:34:31.970 +22:00:52.06]
+            # Sspec-56647-GAC085N22V2_sp10-041.fits RA  = 83.613015 DEC = 22.013236 / [deg] 
+            ########################################################################################
+            #elif template_filename in ['crab_lamost.fits']: # erg/s/cm**2/Angstrom
+                #template_filename = os.path.join(refdata, 'sed', template_filename)
+            #hdu = fits.open(template_filename)
+            #template_wave = hdu[1].data['wavelength']   # A
+            #template_flux = hdu[1].data['flux']         # * 1e-12         # erg/s/A/cm2
+            
         elif template_filename.endswith('.txt'):
 
             cat = pd.read_csv(template_filename, sep='\s+', header=None)

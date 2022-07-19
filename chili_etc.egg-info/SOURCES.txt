@@ -7,6 +7,7 @@ chili_etc.egg-info/dependency_links.txt
 chili_etc.egg-info/requires.txt
 chili_etc.egg-info/top_level.txt
 src/chili_etc/__init__.py
+src/chili_etc/demo/CHILI-ETC-crab.ipynb
 src/chili_etc/demo/CHILI-ETC-demo.ipynb
 src/chili_etc/demo/chili_etc_demo.py
 src/chili_etc/refdata/chili/ifs/IFU_throughput.dat
@@ -25,6 +26,7 @@ src/chili_etc/refdata/sed/SFgal_texp_FeH-2_tau10_Ew50.fits
 src/chili_etc/refdata/sed/SFgal_texp_FeH0_tau1_Ewd.fits
 src/chili_etc/refdata/sed/SFgal_texp_FeH0_tau5_Ew10_AGN1.fits
 src/chili_etc/refdata/sed/SFgal_texp_FeH0_tau5_Ew5.fits
+src/chili_etc/refdata/sed/crab_lamost.fits
 src/chili_etc/refdata/source/config.json
 src/chili_etc/sp/__init__.py
 src/chili_etc/sp/chili_config.py

@@ -9,7 +9,7 @@ This code is used for setting the chili-etc parameters.
 by YuLiang 
 yuliang@shao.ac.cn
 """
-
+import numpy as np
 import os
 import pandas as pd
 import json
@@ -86,8 +86,7 @@ def get_throughput():
 def build_default_source():
     dict_s = {}      # dict_s means dict of the default source
     dict_s['spectrum'] = {'name': 'SFgal_texp_FeH0_tau5_Ew10_AGN1.fits', 'redshift': 0.0, 'ebv': 0.0, 'lines':[]}
-    dict_s['normalization'] = {'value': 17.7, 'unit':'mag/arcsec^2', 'band': 'sdss_g'}
-
+    dict_s['normalization'] = {'value': 17.7, 'unit':'erg/s/cm^2/A', 'band': 'sdss_g'}
     # out_file = open(refdata + "source/config.json", "w")
     # json.dump(dict, out_file, indent=2)
     # out_file.close()
@@ -102,6 +101,7 @@ def build_default_calc():
     calc['source'] = build_default_source()
     calc['background'] = 'from_msc'
     calc['background_level'] = 'from_msc'
+    calc['ccdspec_wave'] = np.arange(3500, 10000, 1.75555)
     calc['repn'] = 20.
     calc['obst'] = 300.
     calc['targetsnr'] = 10      # only be used in calculate_type = 'limitmag',
