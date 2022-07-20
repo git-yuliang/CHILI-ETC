@@ -27,6 +27,7 @@ src/chili_etc/refdata/sed/SFgal_texp_FeH0_tau1_Ewd.fits
 src/chili_etc/refdata/sed/SFgal_texp_FeH0_tau5_Ew10_AGN1.fits
 src/chili_etc/refdata/sed/SFgal_texp_FeH0_tau5_Ew5.fits
 src/chili_etc/refdata/sed/crab_lamost.fits
+src/chili_etc/refdata/sed/crab_stis.fits
 src/chili_etc/refdata/source/config.json
 src/chili_etc/sp/__init__.py
 src/chili_etc/sp/chili_config.py

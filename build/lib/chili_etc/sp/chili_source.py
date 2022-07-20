@@ -71,7 +71,8 @@ class read_template(object):
                                      'SFgal_texp_FeH0_tau1_Ewd.fits',
                                      'SFgal_texp_FeH0_tau5_Ew5.fits',
                                      'SFgal_texp_FeH-2_tau10_Ew50.fits',
-                                     'crab_lamost.fits']:
+                                     'crab_lamost.fits',
+                                     'crab_stis.fits']:
                 template_filename = os.path.join(refdata, 'sed', template_filename)
 
             hdu = fits.open(template_filename)
